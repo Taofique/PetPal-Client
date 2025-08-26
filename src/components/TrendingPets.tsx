@@ -1,18 +1,18 @@
 import { useEffect, useState } from 'react';
 import api from '../api/api';
 import type { Pet } from '../types/PetType';
-import { Link } from 'react-router-dom';
 
-const PetList = () => {
+const TrendingPets = () => {
   const [pets, setPets] = useState<Pet[]>([]);
 
   useEffect(() => {
     const fetchPets = async () => {
       try {
-        const response = await api.get('/pets');
-        setPets(response.data.pets);
-      } catch (error) {
-        console.error('Error fetching pets', error);
+        const res = await api.get('/pets');
+        // just pick first 3 as "trending"
+        setPets(res.data.pets.slice(0, 3));
+      } catch (err) {
+        console.error('Error loading pets', err);
       }
     };
     fetchPets();
@@ -20,13 +20,11 @@ const PetList = () => {
 
   return (
     <div>
-      <h1>Pets List</h1>
+      <h2>Trending Pets</h2>
       <ul>
         {pets.map(pet => (
           <li key={pet.id}>
-            <Link to={`/pets/${pet.id}`}>
-              {pet.nickname} {pet.species} {pet.ownerId}
-            </Link>
+            {pet.nickname} ({pet.species})
           </li>
         ))}
       </ul>
@@ -34,4 +32,4 @@ const PetList = () => {
   );
 };
 
-export default PetList;
+export default TrendingPets;
