@@ -43,26 +43,52 @@ const EditPetForm = () => {
       await api.put(`/pets/${id}`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
-      setMessage('Pet updated successfully!');
-      setTimeout(() => navigate(`/pets/${id}`), 1000);
+      setMessage('✅ Pet updated successfully!');
+      setTimeout(() => navigate(`/pets/${id}`), 1200);
     } catch (error) {
-      setMessage('Error updating pet');
+      setMessage('❌ Error updating pet');
     }
   };
 
-  if (!pet) return <p>Loading...</p>;
+  if (!pet) return <p className="p-6">Loading...</p>;
 
   return (
-    <div>
-      <h2>Edit Pet</h2>
-      <form onSubmit={handleSubmit} encType="multipart/form-data">
-        <input value={nickname} onChange={e => setNickname(e.target.value)} placeholder="Nickname" />
-        <input value={species} onChange={e => setSpecies(e.target.value)} placeholder="Species" />
-        <input value={ownerId} onChange={e => setOwnerId(e.target.value)} placeholder="Owner ID" />
-        <input type="file" accept="image/*" onChange={e => setPhoto(e.target.files?.[0] || null)} />
-        <button type="submit">Update</button>
+    <div className="p-6 max-w-xl mx-auto">
+      <h2 className="text-2xl font-bold mb-4">Edit Pet</h2>
+      <form
+        onSubmit={handleSubmit}
+        encType="multipart/form-data"
+        className="bg-white shadow-md rounded-2xl p-6 space-y-4"
+      >
+        <input
+          value={nickname}
+          onChange={e => setNickname(e.target.value)}
+          placeholder="Nickname"
+          className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+        />
+        <input
+          value={species}
+          onChange={e => setSpecies(e.target.value)}
+          placeholder="Species"
+          className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+        />
+        <input
+          value={ownerId}
+          onChange={e => setOwnerId(e.target.value)}
+          placeholder="Owner ID"
+          className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+        />
+        <input
+          type="file"
+          accept="image/*"
+          onChange={e => setPhoto(e.target.files?.[0] || null)}
+          className="w-full border rounded-lg p-2 text-gray-600"
+        />
+        <button type="submit" className="w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition">
+          Update
+        </button>
       </form>
-      {message && <p>{message}</p>}
+      {message && <p className="mt-4 text-center">{message}</p>}
     </div>
   );
 };

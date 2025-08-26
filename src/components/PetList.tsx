@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import api from '../api/api';
 import type { Pet } from '../types/PetType';
-import { Link } from 'react-router-dom';
+import PetCard from './PetCard';
 
 const PetList = () => {
   const [pets, setPets] = useState<Pet[]>([]);
@@ -19,17 +19,13 @@ const PetList = () => {
   }, []);
 
   return (
-    <div>
-      <h1>Pets List</h1>
-      <ul>
+    <div className="p-6">
+      <h1 className="text-2x1 font-bold mb-4">Pets List</h1>
+      <div className="grid gap-6 grid-cols-1 smg:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {pets.map(pet => (
-          <li key={pet.id}>
-            <Link to={`/pets/${pet.id}`}>
-              {pet.nickname} {pet.species} {pet.ownerId}
-            </Link>
-          </li>
+          <PetCard key={pet.id} pet={pet} />
         ))}
-      </ul>
+      </div>
     </div>
   );
 };

@@ -3,7 +3,7 @@ export interface Pet {
   ownerId: number;
   nickname: string;
   species: string;
-  nextFeed: Date | null;
-  nextVet: Date | null;
+  nextFeed: string | null;
+  nextVet: string | null;
   photo: string | null;
 }
