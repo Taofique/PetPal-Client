@@ -1,9 +1,11 @@
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink } from "react-router-dom";
 
 const Navbar = () => {
   const navLinkClass = ({ isActive }: { isActive: boolean }) =>
     `px-3 py-2 rounded-lg transition ${
-      isActive ? 'bg-blue-500 text-white' : 'text-gray-700 hover:bg-gray-100 hover:text-blue-500'
+      isActive
+        ? "bg-blue-500 text-white"
+        : "text-gray-700 hover:bg-gray-100 hover:text-blue-500"
     }`;
 
   return (
