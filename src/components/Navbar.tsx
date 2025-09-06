@@ -45,6 +45,12 @@ const Navbar = () => {
             <NavLink to="/trending" className={navLinkClass}>
               Trending
             </NavLink> */}
+            <Button
+              onClick={handleLogout}
+              className="px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-blue-500"
+            >
+              Logout
+            </Button>
           </div>
         </div>
       </div>
