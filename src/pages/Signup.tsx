@@ -28,7 +28,6 @@ export default function Signup() {
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    // minimal client checks
     if (!name || !email || !password) return;
 
     try {
