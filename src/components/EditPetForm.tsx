@@ -1,18 +1,18 @@
-import { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import api from '../api/api';
-import type { Pet } from '../types/PetType';
+import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import api from "../api/api";
+import type { Pet } from "../types/petTypes";
 
 const EditPetForm = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
   const [pet, setPet] = useState<Pet | null>(null);
-  const [nickname, setNickname] = useState('');
-  const [species, setSpecies] = useState('');
-  const [ownerId, setOwnerId] = useState('');
+  const [nickname, setNickname] = useState("");
+  const [species, setSpecies] = useState("");
+  const [ownerId, setOwnerId] = useState("");
   const [photo, setPhoto] = useState<File | null>(null);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     const fetchPet = async () => {
@@ -24,7 +24,7 @@ const EditPetForm = () => {
         setSpecies(petData.species);
         setOwnerId(String(petData.ownerId));
       } catch (error) {
-        console.error('Error fetching pet', error);
+        console.error("Error fetching pet", error);
       }
     };
     fetchPet();
@@ -34,19 +34,19 @@ const EditPetForm = () => {
     e.preventDefault();
 
     const formData = new FormData();
-    formData.append('nickname', nickname);
-    formData.append('species', species);
-    formData.append('ownerId', ownerId);
-    if (photo) formData.append('photo', photo);
+    formData.append("nickname", nickname);
+    formData.append("species", species);
+    formData.append("ownerId", ownerId);
+    if (photo) formData.append("photo", photo);
 
     try {
       await api.put(`/pets/${id}`, formData, {
-        headers: { 'Content-Type': 'multipart/form-data' }
+        headers: { "Content-Type": "multipart/form-data" },
       });
-      setMessage('✅ Pet updated successfully!');
+      setMessage("✅ Pet updated successfully!");
       setTimeout(() => navigate(`/pets/${id}`), 1200);
     } catch (error) {
-      setMessage('❌ Error updating pet');
+      setMessage("❌ Error updating pet");
     }
   };
 
@@ -62,29 +62,32 @@ const EditPetForm = () => {
       >
         <input
           value={nickname}
-          onChange={e => setNickname(e.target.value)}
+          onChange={(e) => setNickname(e.target.value)}
           placeholder="Nickname"
           className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
         />
         <input
           value={species}
-          onChange={e => setSpecies(e.target.value)}
+          onChange={(e) => setSpecies(e.target.value)}
           placeholder="Species"
           className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
         />
         <input
           value={ownerId}
-          onChange={e => setOwnerId(e.target.value)}
+          onChange={(e) => setOwnerId(e.target.value)}
           placeholder="Owner ID"
           className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
         />
         <input
           type="file"
           accept="image/*"
-          onChange={e => setPhoto(e.target.files?.[0] || null)}
+          onChange={(e) => setPhoto(e.target.files?.[0] || null)}
           className="w-full border rounded-lg p-2 text-gray-600"
         />
-        <button type="submit" className="w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition">
+        <button
+          type="submit"
+          className="w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition"
+        >
           Update
         </button>
       </form>
