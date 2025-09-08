@@ -17,6 +17,6 @@ export interface PetCreateInput {
 
 export interface PetState {
   items: Pet[];
-  status: "idle" | "loading" | "failed";
+  status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
 }
