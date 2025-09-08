@@ -27,8 +27,12 @@ const petSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchPets.fulfilled, (state, action) => {
+        //.addCase registers a case reducer for a specific action type
         state.status = "succeeded";
         state.items = action.payload.pets;
+        state.total = action.payload.total;
+        state.page = action.payload.page;
+        state.pageSize = action.payload.pageSize;
       })
       .addCase(fetchPets.rejected, (state, action) => {
         state.status = "failed";
@@ -44,6 +48,7 @@ const petSlice = createSlice({
       .addCase(createPet.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.items.unshift(action.payload);
+        state.total += 1;
       })
       .addCase(createPet.rejected, (state, action) => {
         state.status = "failed";
