@@ -4,6 +4,9 @@ import { createPet, fetchPets } from "../../services/petServices";
 
 const initialState: PetState = {
   items: [],
+  total: 0,
+  page: 1,
+  pageSize: 10,
   status: "idle",
   error: null,
 };
@@ -25,7 +28,7 @@ const petSlice = createSlice({
       })
       .addCase(fetchPets.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.items = action.payload;
+        state.items = action.payload.pets;
       })
       .addCase(fetchPets.rejected, (state, action) => {
         state.status = "failed";

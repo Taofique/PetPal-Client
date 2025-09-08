@@ -5,7 +5,7 @@ export interface Pet {
   species: string;
   age: number;
   imageUrl: string | null;
-  ownerId: string;
+  ownerId: number;
   createdAt: string;
   updatedAt: string;
 }
