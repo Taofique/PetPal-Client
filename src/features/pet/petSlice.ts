@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PetState } from "../../types/petTypes";
-import { fetchPets } from "../../services/petServices";
+import { createPet, fetchPets } from "../../services/petServices";
 
 const initialState: PetState = {
   items: [],
