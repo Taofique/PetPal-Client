@@ -71,7 +71,7 @@ export default function Signup() {
             id="name"
             className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             type="text"
-            placeholder="Jane Doe"
+            placeholder="Kala Manik"
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
@@ -87,7 +87,7 @@ export default function Signup() {
             id="email"
             className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             type="email"
-            placeholder="jane@example.com"
+            placeholder="kailla@example.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -131,7 +131,7 @@ export default function Signup() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full rounded-md bg-blue-600 px-4 py-2 font-medium text-white disabled:opacity-60"
+          className="w-full rounded-md bg-blue-600 px-4 py-2 font-medium text-white disabled:opacity-60 cursor-pointer"
         >
           {loading ? "Creating account…" : "Sign up"}
         </button>

@@ -1,10 +1,9 @@
-const API_BASE = "http://localhost:4000/api";
+const API_BASE = "http://localhost:4000";
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
   const res = await fetch(`${API_BASE}${path}`, {
     method: "GET",
     headers: { "Content-Type": "application/json", ...(init?.headers ?? {}) },
-    credentials: "include", // harmless if not using cookies
     ...init,
   });
 

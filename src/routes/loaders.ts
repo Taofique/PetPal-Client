@@ -8,5 +8,4 @@ export async function requireAuth() {
     throw redirect("/login");
   }
   return null;
-  3;
 }
