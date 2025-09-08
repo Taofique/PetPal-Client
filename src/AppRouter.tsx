@@ -9,6 +9,7 @@ import { requireAuth } from "./routes/loaders";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import PetForm from "./components/PetForm";
 
 function ProtectedLayout() {
   return (
@@ -24,7 +25,10 @@ const router = createBrowserRouter([
     path: "/",
     loader: requireAuth,
     element: <ProtectedLayout />,
-    children: [{ index: true, element: <Home /> }],
+    children: [
+      { index: true, element: <Home /> },
+      { path: "pets/new", element: <PetForm /> },
+    ],
   },
   { path: "/login", element: <Login /> },
   { path: "/signup", element: <Signup /> },
