@@ -18,6 +18,13 @@ export interface PetCreateInput {
   imageUrl?: string | null;
 }
 
+export interface PetUpdateInput {
+  name?: string;
+  nickname?: string;
+  age?: number;
+  imageUrl?: string | null;
+}
+
 export interface PetListResponse {
   total: number;
   page: number;
