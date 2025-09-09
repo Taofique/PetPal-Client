@@ -60,3 +60,16 @@ export const updatePet = createAsyncThunk<
     return rejectWithValue(e?.message ?? "Failed to update pet");
   }
 });
+
+export const deletePet = createAsyncThunk<
+  number,
+  number,
+  { rejectValue: string }
+>("pets/delete", async (id, { rejectWithValue }) => {
+  try {
+    await api.del<{ message: string }>(`/api/pets/${id}`);
+    return id;
+  } catch (e: any) {
+    return rejectWithValue(e?.message ?? "Failed to delete pet");
+  }
+});
