@@ -45,6 +45,7 @@ export const createPet = createAsyncThunk<
   }
 });
 
+// UPDATE /api/pets/:id {message, pet}
 export const updatePet = createAsyncThunk<
   Pet,
   { id: number; updates: PetUpdateInput },
@@ -61,6 +62,7 @@ export const updatePet = createAsyncThunk<
   }
 });
 
+// DELETE /api/pets/:id {message}
 export const deletePet = createAsyncThunk<
   number,
   number,

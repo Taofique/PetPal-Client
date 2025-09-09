@@ -1,6 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PetState } from "../../types/petTypes";
-import { createPet, fetchPets } from "../../services/petServices";
+import {
+  createPet,
+  deletePet,
+  fetchPets,
+  updatePet,
+} from "../../services/petServices";
 
 const initialState: PetState = {
   items: [],
@@ -53,6 +58,38 @@ const petSlice = createSlice({
       .addCase(createPet.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload ?? "Failed to create pet";
+      });
+
+    //updatePet
+    builder
+      .addCase(updatePet.pending, (state) => {
+        state.status = "loading";
+        state.error = null;
+      })
+      .addCase(updatePet.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        const idx = state.items.findIndex((p) => p.id === action.payload.id);
+        if (idx !== -1) state.items[idx] = action.payload;
+      })
+      .addCase(updatePet.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload ?? "Failed to update pet";
+      });
+
+    //delete
+    builder
+      .addCase(deletePet.pending, (state) => {
+        state.status = "loading";
+        state.error = null;
+      })
+      .addCase(deletePet.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.items = state.items.filter((p) => p.id !== action.payload);
+        state.total = Math.max(0, state.total - 1);
+      })
+      .addCase(deletePet.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload ?? "Failed to delete pets";
       });
   },
 });
