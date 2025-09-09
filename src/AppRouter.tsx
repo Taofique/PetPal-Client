@@ -10,6 +10,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import PetForm from "./components/PetForm";
+import PetList from "./pages/PetList";
 
 function ProtectedLayout() {
   return (
@@ -27,6 +28,7 @@ const router = createBrowserRouter([
     element: <ProtectedLayout />,
     children: [
       { index: true, element: <Home /> },
+      { path: "pets", element: <PetList /> },
       { path: "pets/new", element: <PetForm /> },
     ],
   },
