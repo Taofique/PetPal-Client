@@ -21,6 +21,7 @@ export interface PetCreateInput {
 export interface PetUpdateInput {
   name?: string;
   nickname?: string;
+  species?: string;
   age?: number;
   imageUrl?: string | null;
 }
