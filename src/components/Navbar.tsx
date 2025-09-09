@@ -33,10 +33,13 @@ const Navbar = () => {
             <NavLink to="/" className={navLinkClass} end>
               Home
             </NavLink>
-            {/* <NavLink to="/add-pet" className={navLinkClass}>
+            <NavLink to="/pets" className={navLinkClass}>
+              Pets
+            </NavLink>
+            <NavLink to="/pets/new" className={navLinkClass}>
               Add Pet
             </NavLink>
-            <NavLink to="/feed" className={navLinkClass}>
+            {/* <NavLink to="/feed" className={navLinkClass}>
               Feed
             </NavLink>
             <NavLink to="/sitter" className={navLinkClass}>
