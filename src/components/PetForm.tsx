@@ -2,93 +2,134 @@ import { useState, type FormEvent } from "react";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { createPet } from "../services/petServices";
 import { selectCurrentUser } from "../features/auth/selectore";
+import { Link, useNavigate } from "react-router-dom";
+import type { PetCreateInput } from "../types/petTypes";
 
 const PetForm = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const user = useAppSelector(selectCurrentUser);
-  const petStatus = useAppSelector((s) => s.pets.status);
-  const petError = useAppSelector((s) => s.pets.error);
+  const { status, error } = useAppSelector((s) => s.pets);
 
+  const [name, setName] = useState("");
   const [nickname, setNickname] = useState("");
   const [species, setSpecies] = useState("");
-  const [photo, setPhoto] = useState<File | null>(null);
-  const [message, setMessage] = useState("");
+  const [age, setAge] = useState<string>("");
+  const [imageUrl, setImageUrl] = useState<string>("");
 
-  const handleSubmit = async (e: FormEvent) => {
+  const [message, setMessage] = useState<string>("");
+
+  const loading = status === "loading";
+
+  const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setMessage("");
 
-    if (!nickname || !species) {
-      setMessage("❌ Please fill nickname and species");
+    const ageNum = Number(age);
+    if (!name || !nickname || !species || Number.isNaN(ageNum)) {
+      setMessage("❌ Please fill name, nickname, species and a valid age.");
+      return;
+    }
+    if (ageNum < 0) {
+      setMessage("❌ Age cannot be negative.");
       return;
     }
 
-    try {
-      await dispatch(
-        createPet({
-          nickname,
-          species,
-          // ownerId is inferred from auth state in the thunk; you can pass it explicitly if your API requires it:
-          // ownerId: user?.id,
-          photo,
-        })
-      ).unwrap();
+    const payload: PetCreateInput = {
+      name: name.trim(),
+      nickname: nickname.trim(),
+      species: species.trim(),
+      age: ageNum,
+      imageUrl: imageUrl.trim() ? imageUrl.trim() : null,
+    };
 
-      setMessage("✅ Pet added successfully!");
+    try {
+      await dispatch(createPet(payload)).unwrap();
+      setMessage("✅ Pet created.");
+      // reset
+      setName("");
       setNickname("");
       setSpecies("");
-      setPhoto(null);
-      // (optional) you could also clear file input’s value via ref if desired
+      setAge("");
+      setImageUrl("");
+      // optional: redirect to list
+      navigate("/pets");
     } catch (err: any) {
-      setMessage(`❌ ${err?.message || "Error adding pet"}`);
+      setMessage(`❌ ${err?.message || "Failed to create pet"}`);
     }
   };
 
-  const loading = petStatus === "loading";
-
   return (
-    <div className="p-6 max-w-xl mx-auto">
-      <h2 className="text-2xl font-bold mb-4">Add Pet</h2>
+    <main className="p-6 max-w-xl mx-auto">
+      <div className="mb-4 flex items-center justify-between">
+        <h2 className="text-2xl font-bold">Add Pet</h2>
+        <Link
+          to="/pets"
+          className="rounded-md bg-gray-100 px-3 py-2 text-gray-800 hover:bg-gray-200"
+        >
+          Back to list
+        </Link>
+      </div>
 
-      {/* who is the owner (informational) */}
       {user && (
         <p className="text-sm text-gray-600 mb-3">
           Owner: <span className="font-medium">{user.name}</span> (ID {user.id})
         </p>
       )}
 
-      {petError && (
-        <div className="mb-3 rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700">
-          {petError}
+      {(error || message) && (
+        <div
+          className={`mb-4 rounded-xl border p-3 text-sm ${
+            error || message.startsWith("❌")
+              ? "border-red-200 bg-red-50 text-red-700"
+              : "border-green-200 bg-green-50 text-green-700"
+          }`}
+        >
+          {error ?? message}
         </div>
       )}
 
       <form
-        onSubmit={handleSubmit}
-        encType="multipart/form-data"
+        onSubmit={onSubmit}
         className="bg-white shadow-md rounded-2xl p-6 space-y-4"
       >
         <input
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="Name (e.g., Charlie)"
+          className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+        />
+
+        <input
           value={nickname}
           onChange={(e) => setNickname(e.target.value)}
-          placeholder="Nickname"
+          placeholder="Nickname (unique per owner)"
           className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
         />
 
         <input
           value={species}
           onChange={(e) => setSpecies(e.target.value)}
-          placeholder="Species"
+          placeholder="Species (e.g., Dog, Cat)"
           className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
         />
 
-        {/* Removed ownerId input: inferred from logged-in user */}
+        <input
+          type="number"
+          inputMode="numeric"
+          min={0}
+          value={age}
+          onChange={(e) => setAge(e.target.value)}
+          placeholder="Age (years)"
+          className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+        />
 
         <input
-          type="file"
-          accept="image/*"
-          onChange={(e) => setPhoto(e.target.files?.[0] || null)}
-          className="w-full border rounded-lg p-2 text-gray-600"
+          type="url"
+          value={imageUrl}
+          onChange={(e) => setImageUrl(e.target.value)}
+          placeholder="Image URL (optional, paste a Cloudinary URL)"
+          className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
         />
 
         <button
@@ -99,9 +140,7 @@ const PetForm = () => {
           {loading ? "Saving…" : "Save"}
         </button>
       </form>
-
-      {message && <p className="mt-4 text-center">{message}</p>}
-    </div>
+    </main>
   );
 };
 
