@@ -1,5 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import type { Pet, PetCreateInput, PetListResponse } from "../types/petTypes";
+import type {
+  Pet,
+  PetCreateInput,
+  PetListResponse,
+  PetUpdateInput,
+} from "../types/petTypes";
 import { api } from "../utils/api";
 import type { RootState } from "../app/store";
 
@@ -37,5 +42,21 @@ export const createPet = createAsyncThunk<
     return res.pet;
   } catch (e: any) {
     return rejectWithValue(e?.message ?? "Failed to create pet");
+  }
+});
+
+export const updatePet = createAsyncThunk<
+  Pet,
+  { id: number; updates: PetUpdateInput },
+  { rejectValue: string }
+>("pets/update", async ({ id, updates }, { rejectWithValue }) => {
+  try {
+    const res = await api.put<{ message: string; pet: Pet }>(
+      `/api/pets/${id}`,
+      updates
+    );
+    return res.pet;
+  } catch (e: any) {
+    return rejectWithValue(e?.message ?? "Failed to update pet");
   }
 });
