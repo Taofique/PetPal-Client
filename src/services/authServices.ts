@@ -4,8 +4,8 @@ import type {
   IUserCreateInput,
   IUserLoginInput,
   RequestError,
-} from "../types/authTypes";
-import { setToken } from "../utils/authToken";
+} from "../features/auth/types/authTypes";
+import { setToken } from "../features/auth/utils/authToken";
 import { api } from "../utils/api";
 
 export const registerUser = createAsyncThunk<

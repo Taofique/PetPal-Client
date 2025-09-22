@@ -2,7 +2,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { useEffect } from "react";
 import { fetchPets } from "../services/petServices";
-import PetCard from "../components/PetCard";
+import PetCard from "../features/pets/components/PetCard";
 
 export default function PetList() {
   const dispatch = useAppDispatch();

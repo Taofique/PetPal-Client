@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import api from "../api/api";
 import type { Pet } from "../types/petTypes";
-import PetCard from "./PetCard";
+import PetCard from "../features/pets/components/PetCard";
 
 const TrendingPets = () => {
   const [pets, setPets] = useState<Pet[]>([]);

@@ -1,5 +1,5 @@
 import { redirect } from "react-router-dom";
-import { getToken } from "../utils/authToken";
+import { getToken } from "../features/auth/utils/authToken";
 
 export async function requireAuth() {
   const token = getToken();

@@ -4,13 +4,13 @@ import {
   redirect,
   RouterProvider,
 } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import { requireAuth } from "./routes/loaders";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
-import PetForm from "./components/PetForm";
-import PetList from "./pages/PetList";
+import Navbar from "../common/components/Navbar";
+import { requireAuth } from "./loaders";
+import Home from "../views/Home";
+import Login from "../views/Login";
+import Signup from "../views/Signup";
+import PetForm from "../features/pets/components/PetForm";
+import PetList from "../features/pets/views/PetList";
 
 function ProtectedLayout() {
   return (

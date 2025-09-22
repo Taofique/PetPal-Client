@@ -1,6 +1,6 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../app/hooks";
-import { logout } from "../features/auth/authSlice";
+import { useAppDispatch } from "../../app/hooks";
+import { logout } from "../../features/auth/authSlice";
 import Button from "./Button";
 
 const Navbar = () => {

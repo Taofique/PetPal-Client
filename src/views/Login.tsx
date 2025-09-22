@@ -4,7 +4,7 @@ import {
   selectAuthError,
   selectAuthStatus,
   selectIsAuthenticated,
-} from "../features/auth/selectore";
+} from "../features/auth/selectors";
 import { useEffect, useState, type FormEvent } from "react";
 import { loginUser } from "../services/authServices";
 

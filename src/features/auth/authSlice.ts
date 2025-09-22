@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import type { AuthState } from "../../types/authTypes";
-import { clearToken, getToken } from "../../utils/authToken";
+import type { AuthState } from "./types/authTypes";
+import { clearToken, getToken } from "./utils/authToken";
 import { loginUser, registerUser } from "../../services/authServices";
 
 const initialState: AuthState = {

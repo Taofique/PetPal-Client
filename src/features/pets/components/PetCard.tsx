@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../app/hooks";
-import type { Pet } from "../types/petTypes";
-import { deletePet, updatePet } from "../services/petServices";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import type { Pet } from "../../../types/petTypes";
+import { deletePet, updatePet } from "../../../services/petServices";
 import optionsIcon from "../assets/option.png";
 
 function resolveImageUrl(url?: string | null) {

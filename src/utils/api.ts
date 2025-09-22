@@ -1,4 +1,4 @@
-import { getToken } from "./authToken";
+import { getToken } from "../features/auth/utils/authToken";
 
 const API_BASE = "http://localhost:4000";
 
